@@ -9,39 +9,49 @@ class Archivo {
    
      // Método Guardar
     guardar (nombre,precio,url) {
-        /*
+        var arrego =[]
+        var guardados
         async function leer(archivo){
+            
             try{
-                await fs.promises.readFile(`./desafio6node/${archivo}.txt`,`utf-8`).then(contenido =>{
-                 console.log(JSON.parse(contenido))   
+                await fs.promises.readFile(`./${archivo}.txt`,`utf-8`).then(contenido =>{
+                   guardados =  contenido
                 })
             }
             catch{
-                console.log("error")
+                console.log([])
                 
             }
+              
+
         }
-        leer(this.archivo)
-        
-  */
-      var objeto =  {
-            id :this.largo,
-            title: nombre,
-            price: precio,
-            thumbnail: url
-        }
-        
-        async function agregar(archivo){
+
+        leer(this.archivo).then(()=>{
+            if(guardados) arrego = JSON.parse(guardados)
+            this.largo = arrego.length
+            var objeto =  {
+                id :this.largo,
+                title: nombre,
+                price: precio,
+                thumbnail: url
+            }
+            arrego.push(objeto)
+            async function agregar(archivo){
+                
+                try{
+                    await fs.promises.writeFile(`./${archivo}.txt`,`${JSON.stringify(arrego, null,'\t') }\n`)
+                }
+                catch{
+                    console.log('error')
+                    
+                }
+            }
+            agregar(this.archivo)
             
-            try{
-                await fs.promises.appendFile(`./desafio6node/${archivo}.txt`,`${JSON.stringify(objeto, null,'\t') }\n`)
-            }
-            catch{
-                console.log('error')
-                
-            }
-        }
-        agregar(this.archivo)
+        })
+        
+  
+
     }
 
     // Método Borrar
@@ -50,7 +60,7 @@ class Archivo {
 
               async function borrar(archivo){
                   try{
-                      await fs.promises.unlink(`./desafio6node/${archivo}.txt`)
+                      await fs.promises.unlink(`./${archivo}.txt`)
                   }
                   catch{
                       console.log('error')
@@ -64,7 +74,7 @@ class Archivo {
 
       async function leer(archivo){
           try{
-              await fs.promises.readFile(`./desafio6node/${archivo}.txt`,`utf-8`).then(contenido =>{
+              await fs.promises.readFile(`./${archivo}.txt`,`utf-8`).then(contenido =>{
                   console.log(contenido)
               })
           }
@@ -79,6 +89,6 @@ class Archivo {
   }
   
   const archivo = new Archivo("datos")
-  archivo.guardar("nombre",324214,"url")
+  //archivo.guardar("nombre",324214,"url")
  //archivo.borrar()
- //archivo.leer()
+ archivo.leer()
